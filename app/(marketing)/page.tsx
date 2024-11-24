@@ -1,4 +1,3 @@
-// import { Button } from "@/components/ui/button";
 import { Heading } from "./_components/heading";
 import { Heroes } from "./_components/heroes";
 import { Footer } from "./_components/footer";

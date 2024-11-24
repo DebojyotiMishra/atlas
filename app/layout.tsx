@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import localFont from "next/font/local";
+import { ConvexClientProvider } from "@/components/providers/convex-provider";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -16,7 +17,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Atlas",
-  description: "A connected workspace where teams can create, collaborate, and share effortlessly.",
+  description:
+    "A connected workspace where teams can create, collaborate, and share effortlessly.",
   icons: {
     icon: [
       {
@@ -29,9 +31,8 @@ export const metadata: Metadata = {
         url: "/logo-dark.svg",
         href: "/logo-dark.svg",
       },
-    ]
-  }
-
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -43,10 +44,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange storageKey="atlas-theme-2">
-          {children}
-        </ThemeProvider>
+        >
+        <ConvexClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="atlas-theme-2"
+          >
+            {children}
+          </ThemeProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   );
