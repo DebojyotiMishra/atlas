@@ -15,7 +15,7 @@ export const Heading = () => {
         Your Ideas, Documents & Plans. Unified. Welcome to{" "}
         <span className="underline">Atlas</span>
       </h1>
-      <h3 className="text-base sm:text-xl md:text-2xl font-normal">
+      <h3 className="text-base sm:text-xl md:text-2xl font-semibold">
         Atlas is the all-in-one workspace for your notes, documents, and plans.
         It&apos;s like a second brain, but better.
       </h3>
