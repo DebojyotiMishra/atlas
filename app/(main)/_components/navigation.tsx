@@ -32,7 +32,7 @@ export const Navigation = () => {
   }, [pathname, isMobile]);
 
   const handleMouseDown = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.preventDefault();
     event.stopPropagation();
@@ -42,9 +42,10 @@ export const Navigation = () => {
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isResizingRef.current) return;
-    let newWidth = e.clientX;
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!isResizingRef) return;
+
+    let newWidth = event.clientX;
 
     if (newWidth < 240) newWidth = 240;
     if (newWidth > 480) newWidth = 480;
@@ -54,7 +55,7 @@ export const Navigation = () => {
       navbarRef.current.style.setProperty("left", `${newWidth}px`);
       navbarRef.current.style.setProperty(
         "width",
-        `calc(100% - ${newWidth}px)`,
+        `calc(100% - ${newWidth}px)`
       );
     }
   };
@@ -74,7 +75,7 @@ export const Navigation = () => {
       navbarRef.current.style.removeProperty("width");
       navbarRef.current.style.setProperty(
         "width",
-        isMobile ? "0" : "calc(100%-240px)",
+        isMobile ? "0" : "calc(100% - 240px)",
       );
       navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
       setTimeout(() => setIsResetting(false), 300);
@@ -94,13 +95,13 @@ export const Navigation = () => {
   };
 
   return (
-    <div>
+    <>
       <aside
         ref={sidebarRef}
         className={cn(
           "group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[99999]",
           isResetting && "transition-all ease-in-out duration-300",
-          isMobile && "w-0",
+          isMobile && "w-0"
         )}
       >
         <div
@@ -127,6 +128,7 @@ export const Navigation = () => {
           className="opacity-0 group-hover/sidebar:opacity-70 transition cursor-ew-resize absolute h-full w-0.5 bg-primary/10 right-0 top-0"
         ></div>
       </aside>
+
       <div
         ref={navbarRef}
         className={cn(
@@ -145,6 +147,6 @@ export const Navigation = () => {
           )}
         </nav>
       </div>
-    </div>
+    </>
   );
 };

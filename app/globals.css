@@ -18,7 +18,7 @@ h1, h2, h3 {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 240, 6.6%, 11.4%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -43,7 +43,7 @@ h1, h2, h3 {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --selection-bg: #000000;
+    --selection-bg: #005BE7;
     --selection-text: #ffffff;
   }
   .dark {
@@ -71,8 +71,8 @@ h1, h2, h3 {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --selection-bg: #ffffff;
-    --selection-text: #000000;
+    --selection-bg: #005BE7;
+    --selection-text: #ffffff;
   }
 }
 
