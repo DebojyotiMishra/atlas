@@ -18,7 +18,7 @@ h1, h2, h3 {
 
 @layer base {
   :root {
-    --background: 240, 6.6%, 11.4%;
+    --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -47,7 +47,7 @@ h1, h2, h3 {
     --selection-text: #ffffff;
   }
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 0, 0%, 5%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;

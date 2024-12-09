@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import localFont from "next/font/local";
@@ -53,6 +54,7 @@ export default function RootLayout({
             disableTransitionOnChange
             storageKey="atlas-theme-2"
           >
+            <Toaster position='bottom-center'/>
             {children}
           </ThemeProvider>
         </ConvexClientProvider>
