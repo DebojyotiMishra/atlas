@@ -1,12 +1,13 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./userItem";
+import { Item } from "./item";
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -121,6 +122,11 @@ export const Navigation = () => {
         </div>
         <div>
           <UserItem></UserItem>
+          <Item 
+            onClick={() => {}}
+            label="New Note"
+            icon={PlusCircle}
+          />
         </div>
         <div className="mt-4">
           {documents?.map((document) => (
