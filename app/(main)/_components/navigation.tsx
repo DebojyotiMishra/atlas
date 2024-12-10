@@ -8,7 +8,11 @@ import { useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./userItem";
 
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
 export const Navigation = () => {
+  const documents = useQuery(api.documents.get);
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -119,7 +123,11 @@ export const Navigation = () => {
           <UserItem></UserItem>
         </div>
         <div className="mt-4">
-          <p>Documents</p>
+          {documents?.map((document) => (
+            <p key={document._id}>
+              {document.title}
+            </p>
+          ))}
         </div>
 
         {/* This is the bold line that appears when you hover over the sidebar */}

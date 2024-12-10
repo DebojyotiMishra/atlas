@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { SignOutButton, useUser } from "@clerk/clerk-react";
 import { ChevronsLeftRight } from "lucide-react";
 
@@ -50,9 +51,9 @@ export const UserItem = () => {
                     </div>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem className="p-0">
                     <SignOutButton>
-                        <button>Sign out</button>
+                        <Button variant="ghost" className="py-0 w-full justify-start">Sign out</Button>
                     </SignOutButton>
                 </DropdownMenuItem>
             </DropdownMenuContent>
