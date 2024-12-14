@@ -8,15 +8,15 @@ import { useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./userItem";
 import { Item } from "./item";
+import DocumentList from "./document-list";
 
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 
 export const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const documents = useQuery(api.documents.get);
   const create = useMutation(api.documents.create);
 
   const isResizingRef = useRef(false);
@@ -152,11 +152,7 @@ export const Navigation = () => {
           />
         </div>
         <div className="mt-4">
-          {documents?.map((document) => (
-            <p key={document._id}>
-              {document.title}
-            </p>
-          ))}
+          <DocumentList></DocumentList>
         </div>
 
         {/* This is the bold line that appears when you hover over the sidebar */}
