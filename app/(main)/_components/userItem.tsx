@@ -19,7 +19,7 @@ export const UserItem = () => {
     <>
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <div role="button" className="flex items-center w-full p-6 text-sm hover:bg-primary/5">
+                <div role="button" className="flex items-center w-full p-4 text-sm hover:bg-primary/5">
                     <div className="gap-x-2 flex items-center max-w-[150px]">
                         <Avatar className="h-5 w-5">
                             <AvatarImage src={user?.imageUrl} />
