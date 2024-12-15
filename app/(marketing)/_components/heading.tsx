@@ -16,7 +16,7 @@ export const Heading = () => {
         <span className="underline">Atlas</span>
       </h1>
       <h3 className="text-base sm:text-xl md:text-2xl font-medium py-2 sm:py-3">
-        It&apos;s like a second brain, but better.
+        like a second brain, but better.
       </h3>
       {isLoading && (
         <div className="w-full flex items-center justify-center">
