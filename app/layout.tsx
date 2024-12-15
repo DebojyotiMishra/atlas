@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import localFont from "next/font/local";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
 import "./globals.css";
+import { ModalProvider } from '@/components/providers/modal-provider';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -55,6 +56,7 @@ export default function RootLayout({
             storageKey="atlas-theme-2"
           >
             <Toaster position='bottom-center'/>
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </ConvexClientProvider>

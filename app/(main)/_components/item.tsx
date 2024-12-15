@@ -100,7 +100,7 @@ const onArchive = (event:React.MouseEvent<HTMLDivElement,MouseEvent>) => {
       {!!id && (
         <div
           role="button"
-          className="h-full rounded-sm hover:bg-neutral-300 dark:bg-transparent mr-1"
+          className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-transparent mr-1"
           onClick={handleExpand}
         >
           <ChevronIcon className="h-4 w-4 shrink-0" />
