@@ -1,7 +1,20 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import {
+  ChevronsLeft,
+  MenuIcon,
+  Plus,
+  PlusCircle,
+  Search,
+  Settings,
+  Trash,
+} from "lucide-react";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
@@ -13,6 +26,7 @@ import DocumentList from "./document-list";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import { TrashBox } from "./trash-box";
 
 export const Navigation = () => {
   const pathname = usePathname();
@@ -40,7 +54,7 @@ export const Navigation = () => {
   }, [pathname, isMobile]);
 
   const handleMouseDown = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     event.preventDefault();
     event.stopPropagation();
@@ -63,7 +77,7 @@ export const Navigation = () => {
       navbarRef.current.style.setProperty("left", `${newWidth}px`);
       navbarRef.current.style.setProperty(
         "width",
-        `calc(100% - ${newWidth}px)`
+        `calc(100% - ${newWidth}px)`,
       );
     }
   };
@@ -103,14 +117,14 @@ export const Navigation = () => {
   };
 
   const handleCreate = () => {
-    const promise = create({title: "Untitled"})
+    const promise = create({ title: "Untitled" });
 
     toast.promise(promise, {
       loading: "Creating a new note...",
       success: "New note created!",
-      error: "Failed to create a new note"
-      });
-    };
+      error: "Failed to create a new note",
+    });
+  };
 
   return (
     <>
@@ -119,7 +133,7 @@ export const Navigation = () => {
         className={cn(
           "group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[99999]",
           isResetting && "transition-all ease-in-out duration-300",
-          isMobile && "w-0"
+          isMobile && "w-0",
         )}
       >
         <div
@@ -134,25 +148,24 @@ export const Navigation = () => {
         </div>
         <div>
           <UserItem></UserItem>
-          <Item
-            label="Search"
-            icon={Search}
-            isSearch
-            onClick={() => {}}
-          />
-          <Item
-            label="Settings"
-            icon={Settings}
-            onClick={() => {}}
-          />
-          <Item
-            onClick={handleCreate}
-            label="New Note"
-            icon={PlusCircle}
-          />
+          <Item label="Search" icon={Search} isSearch onClick={() => {}} />
+          <Item label="Settings" icon={Settings} onClick={() => {}} />
+          <Item onClick={handleCreate} label="New Note" icon={PlusCircle} />
         </div>
         <div className="mt-4">
           <DocumentList></DocumentList>
+          <Item onClick={handleCreate} icon={Plus} label="Add a page"></Item>
+          <Popover>
+            <PopoverTrigger className="w-full mt-4">
+              <Item label="Trash" icon={Trash} />
+            </PopoverTrigger>
+            <PopoverContent
+              className="p-0 w-72 "
+              side={isMobile ? "bottom" : "right"}
+            >
+              <TrashBox/>
+            </PopoverContent>
+          </Popover>
         </div>
 
         {/* This is the bold line that appears when you hover over the sidebar */}
