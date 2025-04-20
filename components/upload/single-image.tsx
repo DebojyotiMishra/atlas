@@ -11,6 +11,7 @@ import * as React from 'react';
 import { useDropzone, type DropzoneOptions } from 'react-dropzone';
 import { ProgressCircle } from './progress-circle';
 import { formatFileSize, useUploader } from './uploader-provider';
+import Image from 'next/image';
 
 const DROPZONE_VARIANTS = {
   base: 'relative rounded-md p-4 flex justify-center items-center flex-col cursor-pointer min-h-[150px] min-w-[200px] border-1 border-muted-foreground transition-colors duration-200 ease-in-out',
@@ -176,11 +177,16 @@ const SingleImageDropzone = React.forwardRef<
         <input ref={ref} {...getInputProps()} {...props} />
 
         {displayUrl ? (
-          <img
-            className="h-full w-full rounded-md object-cover"
-            src={displayUrl}
-            alt={fileState?.file.name ?? 'uploaded image'}
-          />
+          <div className="relative h-full w-full">
+            <Image
+              className="rounded-md object-cover"
+              src={displayUrl}
+              alt={fileState?.file.name ?? 'uploaded image'}
+              fill
+              sizes={`${Math.max(width, 200)}px`}
+              priority
+            />
+          </div>
         ) : (
           // Placeholder content shown when no image is selected
           <div

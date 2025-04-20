@@ -16,7 +16,7 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, ElementRef } from "react";
+import { useEffect, useRef, ElementRef, useCallback } from "react";
 import { useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./userItem";
@@ -46,13 +46,30 @@ export const Navigation = () => {
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
+  // Fix: Use useCallback for resetWidth to avoid re-creation on each render
+  const resetWidth = useCallback(() => {
+    if (sidebarRef.current && navbarRef.current) {
+      setIsCollapsed(false);
+      setIsResetting(true);
+
+      sidebarRef.current.style.width = isMobile ? "100%" : "240px";
+      navbarRef.current.style.removeProperty("width");
+      navbarRef.current.style.setProperty(
+        "width",
+        isMobile ? "0" : "calc(100% - 240px)"
+      );
+      navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
+      setTimeout(() => setIsResetting(false), 300);
+    }
+  }, [isMobile]); // Add isMobile as a dependency
+
   useEffect(() => {
     if (isMobile) {
       collapse();
     } else {
       resetWidth();
     }
-  }, [isMobile]);
+  }, [isMobile, resetWidth]); // Fix: Add resetWidth to dependency array
 
   useEffect(() => {
     if (isMobile) {
@@ -93,22 +110,6 @@ export const Navigation = () => {
     isResizingRef.current = false;
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
-  };
-
-  const resetWidth = () => {
-    if (sidebarRef.current && navbarRef.current) {
-      setIsCollapsed(false);
-      setIsResetting(true);
-
-      sidebarRef.current.style.width = isMobile ? "100%" : "240px";
-      navbarRef.current.style.removeProperty("width");
-      navbarRef.current.style.setProperty(
-        "width",
-        isMobile ? "0" : "calc(100% - 240px)"
-      );
-      navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
-      setTimeout(() => setIsResetting(false), 300);
-    }
   };
 
   const collapse = () => {

@@ -1,13 +1,15 @@
 "use client";
 
 import * as React from "react";
+import { SingleImageDropzone, SingleImageDropzoneProps } from "./single-image";
 import {
-  SingleImageDropzone,
-  SingleImageDropzoneProps,
-} from "./single-image.tsx";
-import { UploaderProvider } from "./uploader-provider";
+  UploaderProvider,
+  FileState,
+  CompletedFileState,
+} from "./uploader-provider";
 
-interface SingleImageUploaderProps extends SingleImageDropzoneProps {
+interface SingleImageUploaderProps
+  extends Omit<SingleImageDropzoneProps, "value" | "onChange"> {
   /**
    * Upload function to use with the uploader
    */
@@ -31,14 +33,14 @@ interface SingleImageUploaderProps extends SingleImageDropzoneProps {
   /**
    * Value to control the file state externally
    */
-  value?: any;
+  value?: FileState[];
 
   /**
    * Callback when the file changes
    */
   onChange?: (args: {
-    allFiles: any[];
-    completedFiles: any[];
+    allFiles: FileState[];
+    completedFiles: CompletedFileState[];
   }) => void | Promise<void>;
 }
 
