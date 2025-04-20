@@ -52,8 +52,8 @@ export default function RootLayout({
           <EdgeStoreProvider>
             <ThemeProvider
               attribute="class"
-              defaultTheme="system"
-              enableSystem
+              defaultTheme="light"
+              enableSystem={false}
               disableTransitionOnChange
               storageKey="atlas-theme-2"
             >
