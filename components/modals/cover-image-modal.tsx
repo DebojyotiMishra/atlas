@@ -9,7 +9,7 @@ import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
 import { SingleImageUploader } from "@/components/upload/single-image-uploader";
-import { set } from "zod";
+// import { set } from "zod";
 
 const CoverImageModal = () => {
   const params = useParams();

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useUser } from "@clerk/clerk-react";
 
@@ -48,12 +48,15 @@ export const Item = ({
 
   const create = useMutation(api.documents.create);
   const archive = useMutation(api.documents.archive);
-//   const router = useRouter();
+  const router = useRouter();
 
 const onArchive = (event:React.MouseEvent<HTMLDivElement,MouseEvent>) => {
     event.stopPropagation()
     if (!id) return
     const promise = archive({id})
+    .then(() => {
+      router.push("/documents");
+    })
 
     toast.promise(promise,{
       loading:"Moving to trash...",
@@ -76,7 +79,7 @@ const onArchive = (event:React.MouseEvent<HTMLDivElement,MouseEvent>) => {
         if (!expanded) {
           onExpand?.();
         }
-        // router.push(`/documents/${documentId}`);
+        router.push(`/documents/${documentId}`);
       }
     );
 
