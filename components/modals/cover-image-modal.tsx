@@ -1,4 +1,5 @@
 "use client";
+
 import useCoverImage from "@/hooks/useCoverImage";
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
@@ -8,39 +9,34 @@ import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
 import { SingleImageUploader } from "@/components/upload/single-image-uploader";
+import { set } from "zod";
 
 const CoverImageModal = () => {
   const params = useParams();
   const update = useMutation(api.documents.update);
-  const [file, setFile] = useState<File>();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { edgestore } = useEdgeStore();
   const coverImage = useCoverImage();
 
   const onClose = () => {
-    setFile(undefined);
     setIsSubmitting(false);
     coverImage.onClose();
   };
 
-  const onChange = async (file?: File) => {
-    if (file) {
-      setIsSubmitting(true);
-      setFile(file);
+  const onUploadComplete = async (url: string) => {
+    if (!url) return;
 
-      const res = await edgestore.publicFiles.upload({
-        file,
-        options: {
-          replaceTargetUrl: coverImage.url,
-        },
-      });
-
+    setIsSubmitting(true);
+    try {
       await update({
         id: params.documentId as Id<"documents">,
-        coverImage: res.url,
+        coverImage: url,
       });
-
       onClose();
+    } catch (error) {
+      console.error("Failed to update document:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -50,32 +46,29 @@ const CoverImageModal = () => {
         <DialogHeader>
           <h2 className="text-center text-lg font-semibold">Cover Image</h2>
         </DialogHeader>
-          <SingleImageUploader
-            uploadFn={async ({ file, signal, onProgressChange }) => {
-              const res = await edgestore.publicFiles.upload({
-                file,
-                signal,
-                options: {
-                  replaceTargetUrl: coverImage.url,
-                },
-                onProgressChange,
-              });
-
-              return { url: res.url };
-            }
-            }
-            onUploadComplete={onChange}
-            autoUpload={false}
-            dropzoneOptions={{
-              maxSize: 1024 * 1024 * 5, // 5MB
-            }}
-            className="w-full h-[200px] rounded-md"
-            value={file ? [file] : []}
-            onChange={(files) => {
-              setFile(files[0]);
-            }}
-            disabled={isSubmitting}
-          />
+        <SingleImageUploader
+          uploadFn={async ({ file, signal, onProgressChange }) => {
+            const res = await edgestore.publicFiles.upload({
+              file,
+              signal,
+              options: {
+                replaceTargetUrl: coverImage.url,
+              },
+              onProgressChange,
+            });
+            return { url: res.url };
+          }}
+          onUploadComplete={onUploadComplete}
+          autoUpload={true}
+          dropzoneOptions={{
+            maxSize: 1024 * 1024 * 5, // 5MB
+            accept: {
+              "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
+            },
+          }}
+          className="w-full h-[200px] rounded-md"
+          disabled={isSubmitting}
+        />
       </DialogContent>
     </Dialog>
   );
