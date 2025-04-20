@@ -1,36 +1,78 @@
 # Atlas
 
-This project is a simplified clone of the popular productivity application, Notion. It's designed to replicate some of the core features of Notion, providing a platform where users can create, edit, and organize their notes in a flexible and intuitive interface.
+A connected workspace where teams can create, collaborate, and share effortlessly.
 
-It uses Convex as the backend, which is a real-time database that allows for instant data updates. The application also uses Edgestore, a distributed key-value store, to manage the images and files uploaded by the users.The user authentication is handled by Clerk, a secure and scalable user authentication API.
+## Prerequisites
+
+- Node.js 18+ and npm
+- Convex account and project
+- Clerk account and project
+- EdgeStore account
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+NEXT_PUBLIC_CONVEX_URL=your_convex_url
+NEXT_PUBLIC_EDGESTORE_ACCESS_KEY=your_edgestore_access_key
+NEXT_PUBLIC_EDGESTORE_SECRET_KEY=your_edgestore_secret_key
+```
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/atlas.git
+cd atlas
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Install EdgeStore packages:
+```bash
+npm install @edgestore/server @edgestore/react
+```
+
+4. Start the development server:
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:3000`.
 
 ## Features
 
-### Productivity and Organization's
+- Real-time collaboration
+- Document management
+- Image uploads with EdgeStore
+- Authentication with Clerk
+- Database with Convex
 
-- Notion-style editor for seamless note-taking
-- Infinite children documents for hierarchical organization
-- Expandable and fully collapsible sidebar for easy navigation
-- Customizable icons for each document, updating in real-time
-- Trash can with soft delete and file recovery options
+## Tech Stack
 
-### User Experience
+- Next.js 15
+- React 18
+- TypeScript
+- Tailwind CSS
+- Convex
+- Clerk
+- EdgeStore
+- Zustand
 
-- Light and Dark mode to suit preferences
-- Full mobile responsiveness for productivity on the go
-- Landing page for a welcoming user entry point
-- Cover image for each document to add a personal touch
+## Contributing
 
-### Data Management
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- Real-time database for instant data updates
-- File upload, deletion, and replacement options
+## License
 
-### Security and Sharing
-
-- Authentication to secure notes
-- Option to publish your note to the web for sharing
-
-## Acknowledgements
-
-[CodewithAntonio](https://www.youtube.com/@codewithantonio)
+This project is licensed under the MIT License - see the LICENSE file for details.
