@@ -25,7 +25,7 @@ NEXT_PUBLIC_EDGESTORE_SECRET_KEY=your_edgestore_secret_key
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/atlas.git
+git clone https://github.com/DebojyotiMishra/atlas.git
 cd atlas
 ```
 
