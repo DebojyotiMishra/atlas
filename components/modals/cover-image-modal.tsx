@@ -2,19 +2,19 @@
 import useCoverImage from "@/hooks/useCoverImage";
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-// import { useEdgeStore } from "@/lib/edgestore";
+import { useEdgeStore } from "@/lib/edgestore";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
-// import { SingleImageDropzone } from "@/components/ui/single-image-dropzone";
+import { SingleImageUploader } from "@/components/upload/single-image-uploader";
 
 const CoverImageModal = () => {
   const params = useParams();
   const update = useMutation(api.documents.update);
   const [file, setFile] = useState<File>();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const { edgestore } = useEdgeStore();
+  const { edgestore } = useEdgeStore();
   const coverImage = useCoverImage();
 
   const onClose = () => {
@@ -50,9 +50,32 @@ const CoverImageModal = () => {
         <DialogHeader>
           <h2 className="text-center text-lg font-semibold">Cover Image</h2>
         </DialogHeader>
-        <div>
-            TODO: UPLOAD IMAGE HERE
-        </div>
+          <SingleImageUploader
+            uploadFn={async ({ file, signal, onProgressChange }) => {
+              const res = await edgestore.publicFiles.upload({
+                file,
+                signal,
+                options: {
+                  replaceTargetUrl: coverImage.url,
+                },
+                onProgressChange,
+              });
+
+              return { url: res.url };
+            }
+            }
+            onUploadComplete={onChange}
+            autoUpload={false}
+            dropzoneOptions={{
+              maxSize: 1024 * 1024 * 5, // 5MB
+            }}
+            className="w-full h-[200px] rounded-md"
+            value={file ? [file] : []}
+            onChange={(files) => {
+              setFile(files[0]);
+            }}
+            disabled={isSubmitting}
+          />
       </DialogContent>
     </Dialog>
   );

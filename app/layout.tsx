@@ -1,3 +1,4 @@
+import { EdgeStoreProvider } from '../lib/edgestore';
 import { Toaster } from 'sonner';
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -48,17 +49,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
         <ConvexClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            storageKey="atlas-theme-2"
-          >
-            <Toaster position='bottom-center'/>
-            <ModalProvider />
-            {children}
-          </ThemeProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+              storageKey="atlas-theme-2"
+            >
+              <Toaster position='bottom-center'/>
+              <ModalProvider />
+              {children}
+            </ThemeProvider>
+          </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
